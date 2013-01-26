@@ -1,0 +1,70 @@
+LIBNAME = sparql
+HEAP = sparql.heap
+OBJ = Obj/
+LIB = Lib/
+DEBUG =  $(OBJ)const.o $(OBJ)misc.o $(OBJ)sparql.o
+UNSAFE =  $(OBJ)const_u.o $(OBJ)misc_u.o $(OBJ)sparql_u.o
+ARCHIVE = $(LIB)libbigloosparql_s-1.0.a $(LIB)libbigloosparql_u-1.0.a \
+	$(LIB)libbigloosparql_s-1.0.dylib $(LIB)libbigloosparql_u-1.0.dylib \
+	$(LIB)libbigloosparql_es-1.0.dylib $(LIB)libbigloosparql_eu-1.0.dylib
+MISC = Misc/
+LLIB = Llib/
+USRLIB = /usr/local/lib/bigloo/3.9a/
+
+all: $(HEAP) $(UNSAFE) $(DEBUG) $(ARCHIVE)
+
+$(HEAP):
+	bigloo -unsafe -safee -q -mkaddheap -mkaddlib -heap-library \
+		$(LIBNAME) $(MISC)make_lib.scm -addheap $@
+
+$(OBJ)%_u.o: Llib/%.scm $(OBJ)
+	bigloo -O3 -unsafe -safee -mkaddlib -cc gcc -fsharing -q -rm -unsafev \
+		$< -o $@ -c
+
+$(OBJ)%.o: Llib/%.scm $(OBJ)
+	bigloo -O3 -mkaddlib -g -cg -cc gcc -fsharing -q -rm -unsafev $< -o \
+		$@ -c
+
+$(OBJ):
+	mkdir $@
+
+$(LIB)libbigloosparql_s-1.0.a: $(DEBUG) $(LIB)
+	ar qcv $@ $(DEBUG)
+	ranlib $@
+
+$(LIB)libbigloosparql_u-1.0.a: $(UNSAFE) $(LIB)
+	ar qcv $@ $(UNSAFE)
+	ranlib $@
+
+$(LIB)libbigloosparql_s-1.0.dylib: $(DEBUG) $(LIB)
+	gcc -o $@ $(DEBUG) -dynamiclib -single_module -Wl -ldl -lgmp -lpcre -lm \
+		-lbigloo_u-3.9a -lbigloogc_fth-3.9a -lc
+
+$(LIB)libbigloosparql_u-1.0.dylib: $(UNSAFE) $(LIB)
+	gcc -o $@ $(UNSAFE) -dynamiclib -single_module -Wl -ldl -lgmp -lpcre \
+		-lm -lbigloo_u-3.9a -lbigloogc_fth-3.9a -lc
+
+$(LIB)libbigloosparql_es-1.0.dylib: $(DEBUG) $(OBJ)make_lib.o $(LIB)
+	gcc -o $@ $(DEBUG) $(OBJ)make_lib.o -dynamiclib -single_module -Wl -ldl -lgmp -lpcre -lm \
+		-lbigloo_u-3.9a -lbigloogc_fth-3.9a -lc
+
+$(LIB)libbigloosparql_eu-1.0.dylib: $(UNSAFE) $(OBJ)make_lib_u.o $(LIB)
+	gcc -o $@ $(UNSAFE) $(OBJ)make_lib_u.o -dynamiclib -single_module -Wl -ldl -lgmp -lpcre \
+		-lm -lbigloo_u-3.9a -lbigloogc_fth-3.9a -lc
+
+$(OBJ)make_lib.o: Misc/make_lib.scm $(OBJ)
+	bigloo -O3 -mkaddlib -g -cg -cc gcc -fsharing -q -rm -unsafev $< -o $@ \
+		-c
+
+$(OBJ)make_lib_u.o: Misc/make_lib.scm $(OBJ)
+	bigloo -O3 -unsafe -safee -mkaddlib -cc gcc -fsharing -q -rm -unsafev \
+		$< -o $@ -c
+
+$(LIB):
+	mkdir $@
+
+install:
+	cp $(HEAP) $(ARCHIVE) $(USRLIB)
+
+clean:
+	rm -rf $(HEAP) $(OBJ) $(ARCHIVE) $(LIB)

@@ -1,0 +1,152 @@
+# automatically generated, don't edit
+# Ven 25 jan 2013 19:10:16 CET
+
+RELEASE=1.0
+VERSION=
+
+BIGLOOSVN=ssh://hop@hop.inria.fr/bigloo
+
+AFILE_EXE=bglafile
+JFILE_EXE=bgljfile
+BTAGS_EXE=bgltags
+BDEPEND_EXE=bgldepend
+BMAKE_EXE=bglmake
+BPP_EXE=bglpp
+BPROF_EXE=bglprof
+MCO_EXE=bglmco
+JAS_EXE=bgljas
+BMEM_EXE=bglmem
+BMEMRUN_EXE=bglmemrun
+BDB_EXE=bgldb
+BGLPKG_EXE=bglpkg
+
+HOSTOS=darwin
+
+RM=/bin/rm
+
+LN_S=ln -s
+
+INSTALLBEE=partial
+
+BOOTDIR=/Users/couillec/Documents/These/Code/Bigloo/Distrib/bigloo3.9a
+BOOTBINDIR=/Users/couillec/Documents/These/Code/Bigloo/Distrib/bigloo3.9a/bin
+BOOTLIBDIR=/Users/couillec/Documents/These/Code/Bigloo/Distrib/bigloo3.9a/lib/3.9a
+
+BGLBUILDBINDIR=/Users/couillec/Documents/These/Code/Bigloo/Distrib/bigloo3.9a/bin
+BGLBUILDLIBDIR=/Users/couillec/Documents/These/Code/Bigloo/Distrib/bigloo3.9a/lib/3.9a
+BGLBUILDBIGLOO=$(BGLBUILDBINDIR)/bigloo
+
+DESTDIR=
+BINDIR=/usr/local/bin
+LIBDIR=$(DESTDIR)/usr/local/lib
+FILDIR=bigloo/3.9a
+ZIPDIR=$(DESTDIR)/usr/local/lib/bigloo/3.9a
+SYSZIPDIR=$(DESTDIR)/usr/local/lib/bigloo/3.9a
+DLLDIR=$(DESTDIR)/usr/local/lib/bigloo/3.9a
+SYSDLLDIR=$(DESTDIR)
+MANDIR=$(DESTDIR)/usr/local/man/man1
+INFODIR=$(DESTDIR)/usr/local/info
+DOCDIR=$(DESTDIR)/usr/local/doc/bigloo-3.9a
+TMP=/var/folders/47/dvnjj1hj46l1z65vt68wl0l80000gn/T/
+
+NATIVEBACKEND=yes
+NATIVE_MACHDEP=generic_mach_dep
+
+LIBRARYNAME=bigloo
+
+CC=gcc
+CFLAGS=-O3 
+CSTRIPFLAGS=-s
+CPICFLAGS=-fPIC
+CFLAGS_P=$(CFLAGS) -pg -fno-inline
+CGCFLAGS=-DHAS_X86_THREAD_STATE64___RAX -DFINALIZE_ON_DEMAND  -I$(BOOTLIBDIR) $(CPICFLAGS)
+EXTRALIBS=-ldl -lgmp -lpcre -lm 
+EXTRAGCLIBS=-lc
+CLOSELIBS= # always empty, does not contain GC, override by makefiles
+
+CUSTOMGC=gc-7.2d
+GCLIB=bigloogc_fth
+GCCUSTOM=yes
+GCINCLUDE=-I$(BOOTDIR)/gc/$(CUSTOMGC)/include
+GCCLOSELIB=-l$(GCLIB)-$(RELEASE)
+GCSTDOBJ=
+
+GMPCUSTOM=no
+EXTRA_LD_OPT= -rdynamic
+SHRD_COMP=yes
+SHRD_BDE_OPT=
+EXE_SUFFIX=
+AS=gcc -c -x assembler-with-cpp
+
+AR=ar
+ARFLAGS=qc
+RANLIB=ranlib
+SHAREDLIBRARYSUPPORT=yes
+SHAREDLIBRARYCLOSED=yes
+LD=gcc 
+LDFLAGS= -dynamiclib -single_module -Wl,-read_only_relocs,suppress
+LDLIBS=-lc
+LDCOMPLIBS=$(GCCLOSELIB)  -lc
+LDPRELOADSUPPORT=no
+LDSONAME=-soname
+LDINSTALLNAME=-install_name
+LDINSTALLNAMEDIRROOT=Frameworks
+
+SHAREDSUFFIX=dylib
+
+DLOPENSUPPORT=yes
+
+GCTHREADSUPPORT=yes
+CGCTHREADFLAGS=-D_THREAD_SAFE -D_REENTRANT -DGC_THREADS -DFINALIZE_ON_DEMAND -DBGL_GC_THREADS
+PTHREADLIBS=-lpthread
+OPENSSLLIBS=-lcrypto -lssl
+SQLITELIBS=-lsqlite3
+SQLITESRFI=sqlite
+GSTREAMER=
+GSTREAMERLIBS=
+GSTREAMERFLAGS=
+ALSA=
+ALSALIBS=
+ALSAFLAGS=
+MPG123=
+MPG123LIBS=
+MPG123FLAGS=
+FLAC=
+FLACLIBS=
+FLACCFLAGS=
+AVAHI=no
+AVAHILIBS=
+AVAHICFLAGS=
+PHIDGET=no
+PHIDGETLIBS=
+PHIDGETCFLAGS=
+PHIDGETLIBDIR=
+ENABLE_BGLPKG=
+
+STRIP=true
+
+EMACS=emacs
+EMACSDIR=/usr/share/emacs/22.1/site-lisp/bigloo
+EMACSBRAND=emacs22
+EWARN=
+
+BMASK=755
+MODEXE=755
+MODFILE=644
+MODDIR=755
+
+INSTALLINFO=""
+
+JVMBACKEND=no
+
+BFLAGS=-O3 -fcfa-arithmetic -q
+BOOTFLAGS=
+BFEATUREFLAGS=-srfi enable-gmp -srfi enable-pcre
+LDSTRIPFLAGS=-ldopt -s
+
+SCRIPTEXTENSION=
+C_OBJ_EXTENSION=o
+
+APIS=pthread fthread ssl sqlite web multimedia mail calendar pkgcomp pkglib text srfi1 srfi27 packrat crypto openpgp phone csv
+NOAPIS=
+

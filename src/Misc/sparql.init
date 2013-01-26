@@ -1,0 +1,11 @@
+(declare-library! 'sparql 
+   :version "1.0"
+   :basename "bigloosparql" 
+   :srfi '(sparql)
+   :module-eval 'make_lib)
+
+(set! *ld-options*
+   (string-append "-L/usr/lib " *ld-options*))
+
+(set! *bigloo-user-lib*
+   (cons "-lm" *bigloo-user-lib*))

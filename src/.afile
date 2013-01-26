@@ -1,0 +1,8 @@
+;; automatically generated, don't edit
+;; /Users/couillec/Documents/These/Code/Bigloo/Distrib/bigloo3.9a/api/sparql/src
+;; Sat Jan 26 01:44:34 2013
+
+(
+  (sparql "Llib/sparql.scm")
+)
+
