@@ -2,8 +2,8 @@ LIBNAME = sparql
 HEAP = sparql.heap
 OBJ = Obj/
 LIB = Lib/
-DEBUG =  $(OBJ)const.o $(OBJ)misc.o $(OBJ)sparql.o
-UNSAFE =  $(OBJ)const_u.o $(OBJ)misc_u.o $(OBJ)sparql_u.o
+DEBUG = $(OBJ)sparql.o
+UNSAFE =  $(OBJ)sparql_u.o
 ARCHIVE = $(LIB)libbigloosparql_s-1.0.a $(LIB)libbigloosparql_u-1.0.a \
 	$(LIB)libbigloosparql_s-1.0.dylib $(LIB)libbigloosparql_u-1.0.dylib \
 	$(LIB)libbigloosparql_es-1.0.dylib $(LIB)libbigloosparql_eu-1.0.dylib

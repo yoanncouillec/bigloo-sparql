@@ -7,10 +7,8 @@
       (pipe-map x . fs)
       (fold fonct accu list)
       (mlist lists)
-      (sparql-query url mime query #!optional (verbose #f))
+      (sparql-query url mime query)
       (from lists proc)
-      (construct-string prefixs c w options)
-      (select-string distinct prefixs s w options)
       (construct url mime prefixs c w options)
       (select url mime distinct prefixs s w options)
       (construct-nt url options c . w)
@@ -23,9 +21,7 @@
       (predicat-object url uri options)
       (subject-predicat url object options)
       (entity uri)
-      (construct-dbpedia options c . w)
-      (sparql-construct c w)
-      ))
+      (construct-dbpedia options c . w)))
 
 (define prefixs
    '(("rdfs:" "<http://www.w3.org/2000/01/rdf-schema#>")
@@ -63,7 +59,7 @@
                           (write-char c output)
                           (flush-output-port output)))
                    (string c))
-                #f)))))
+                (begin (print "eof") #f))))))
 
 ; PIPE, FUNCTIONAL STYLE
 (define (pipe x . fs)
@@ -128,10 +124,10 @@
       ((: "@prefix") (cons 'uri (the-string)))))
 
 ; LAUNCH QUERY AND GET THE RESPONSE
-(define (sparql-query url mime query #!optional (verbose #f))
+(define (sparql-query url mime query)
    (define (parser in status header content-length encoding)
       (if (equal? status 200)
-          (let ((format (car (string-split (cdr (assoc :content-type header)) ";"))))
+          (let ((format (cdr (assoc :accept header))))
              (cond
                 ((equal? format "text/plain")
                  (read/lalrp
@@ -153,7 +149,7 @@
                 (in (socket-input socket))
                 (out (socket-output socket))
                 (response (http-parse-response
-                             (tee in (current-output-port) verbose)
+                             in ;(tee in (current-output-port) #t)
                              out parser)))
             (begin (socket-close socket)
                    response))))
@@ -329,33 +325,3 @@
 
 (define (entity uri)
    (string-replace (car (reverse (string-split uri "/"))) #\_ #\ ))
-
-(define-macro (sparql-construct-macro c w)
-   (define (modif l)
-      (cons
-         'list
-         (map
-            (lambda (e)
-               (cond
-                  ((string? e) e)
-                  ((integer? e) (integer->string e))
-                  ((symbol? e) (symbol->string e))
-                  (else e)))
-            l)))
-   (list
-      'list
-      (modif c)
-      (cons
-         'list
-         (map
-            (lambda (we)
-               (modif we))
-            w))))
-
-(define (sparql-construct c w)
-   `(sparql-construct-macro ,c ,w))
-
-(print (sparql-construct-macro
-          ("http://dbpedia.org/resource/James_Bond" symb 10)
-          (("a" b c)
-           (e (string-append "d" "f") (+ 1 2)))))

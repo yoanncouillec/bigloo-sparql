@@ -1,4 +1,5 @@
 (declare-library! 'sparql 
+   :version "1.0"
    :basename "bigloosparql" 
    :srfi '(sparql)
    :module-eval 'make_lib)
